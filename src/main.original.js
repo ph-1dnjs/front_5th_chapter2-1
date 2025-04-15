@@ -8,18 +8,16 @@ import {
   EXTRA_DISCOUNT_RATE,
   LUCKY_ITEM_INTERVAL,
   SUGGEST_ITEM_INTERVAL,
-  LOW_STOCK_THRESHOLD,
   CART_ITEM_QUANTITY_TEXT,
   CART_ITEM_ADD_ALERT,
 } from './constant';
 import { CartContainer, CartWrapper, CartItem } from './component';
-import { getDiscountRate } from './util';
+import { getDiscountRate, updateSelectOption, updateStockInfo, renderRewardPoints } from './util';
 
 // TODO: item, product 의미는 다르지만 사용되는 목적은 동일하기에 관리 차원에서 통일.
 // id 값이 테스트에 영향을 미치기 때문에 한번에 테스트 코드와 같이 수정할 예정
 
 let lastSelectProduct,
-  rewardPoints = 0,
   totalAmount = 0,
   productCount = 0;
 
@@ -59,18 +57,6 @@ function main() {
       }
     }, SUGGEST_ITEM_INTERVAL);
   }, Math.random() * 20000);
-}
-
-function updateSelectOption() {
-  document.getElementById('product-select').innerHTML = '';
-
-  PRODUCTS.forEach(function (item) {
-    const option = document.createElement('option');
-    option.value = item.id;
-    option.textContent = `${item.name} - ${item.price}원`;
-    if (item.stock === 0) option.disabled = true;
-    document.getElementById('product-select').appendChild(option);
-  });
 }
 
 function updateCartSummary() {
@@ -136,33 +122,7 @@ function updateCartSummary() {
   }
 
   updateStockInfo();
-  renderRewardPoints($cartTotal);
-}
-
-const renderRewardPoints = ($cartTotal) => {
-  rewardPoints = Math.floor(totalAmount / 1000);
-  let ptsTag = document.getElementById('loyalty-points');
-
-  if (!ptsTag) {
-    ptsTag = document.createElement('span');
-    ptsTag.id = 'loyalty-points';
-    ptsTag.className = 'text-blue-500 ml-2';
-    $cartTotal.appendChild(ptsTag);
-  }
-  ptsTag.textContent = `(포인트: ${rewardPoints})`;
-};
-
-function updateStockInfo() {
-  let infoMsg = '';
-  const $cartStrockInfo = document.getElementById('stock-status');
-
-  PRODUCTS.forEach(function (item) {
-    if (item.stock < LOW_STOCK_THRESHOLD) {
-      infoMsg += `${item.name}: ${item.stock > 0 ? `재고 부족 (${item.stock}개 남음)` : '품절'}\n`;
-    }
-  });
-
-  $cartStrockInfo.textContent = infoMsg;
+  renderRewardPoints($cartTotal, totalAmount);
 }
 
 main();
