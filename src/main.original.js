@@ -12,7 +12,14 @@ import {
   CART_ITEM_ADD_ALERT,
 } from './constant';
 import { CartContainer, CartWrapper, CartItem } from './component';
-import { getDiscountRate, updateSelectOption, updateStockInfo, renderRewardPoints } from './util';
+import {
+  getDiscountRate,
+  updateSelectOption,
+  updateStockInfo,
+  renderRewardPoints,
+  handleCartItemUpdate,
+  removeCartItem,
+} from './util';
 
 // TODO: item, product 의미는 다르지만 사용되는 목적은 동일하기에 관리 차원에서 통일.
 // id 값이 테스트에 영향을 미치기 때문에 한번에 테스트 코드와 같이 수정할 예정
@@ -129,7 +136,6 @@ main();
 
 document.getElementById('add-to-cart').addEventListener('click', function () {
   const $ProductSelect = document.getElementById('product-select');
-
   const selItem = $ProductSelect.value;
   const itemToAdd = PRODUCTS.find(function (p) {
     return p.id === selItem;
@@ -161,43 +167,17 @@ document.getElementById('add-to-cart').addEventListener('click', function () {
 document.getElementById('cart-items').addEventListener('click', function (event) {
   const tgt = event.target;
 
-  if (tgt.classList.contains('quantity-change') || tgt.classList.contains('remove-item')) {
-    const prodId = tgt.dataset.productId;
-    const itemElem = document.getElementById(prodId);
-    const prod = PRODUCTS.find(function (p) {
-      return p.id === prodId;
-    });
+  const prodId = tgt.dataset.productId;
+  const itemElem = document.getElementById(prodId);
+  const prod = PRODUCTS.find(function (p) {
+    return p.id === prodId;
+  });
 
-    if (tgt.classList.contains('quantity-change')) {
-      const qtyChange = parseInt(tgt.dataset.change);
-      const newQty =
-        parseInt(itemElem.querySelector('span').textContent.split(CART_ITEM_QUANTITY_TEXT)[1]) +
-        qtyChange;
-      if (
-        newQty > 0 &&
-        newQty <=
-          prod.stock +
-            parseInt(itemElem.querySelector('span').textContent.split(CART_ITEM_QUANTITY_TEXT)[1])
-      ) {
-        itemElem.querySelector('span').textContent =
-          itemElem.querySelector('span').textContent.split(CART_ITEM_QUANTITY_TEXT)[0] +
-          CART_ITEM_QUANTITY_TEXT +
-          newQty;
-        prod.stock -= qtyChange;
-      } else if (newQty <= 0) {
-        itemElem.remove();
-        prod.stock -= qtyChange;
-      } else {
-        alert(CART_ITEM_ADD_ALERT);
-      }
-    } else if (tgt.classList.contains('remove-item')) {
-      const remQty = parseInt(
-        itemElem.querySelector('span').textContent.split(CART_ITEM_QUANTITY_TEXT)[1],
-      );
-      prod.stock += remQty;
-      itemElem.remove();
-    }
-
-    updateCartSummary();
+  if (tgt.classList.contains('quantity-change')) {
+    handleCartItemUpdate(itemElem, tgt, prod);
+  } else if (tgt.classList.contains('remove-item')) {
+    removeCartItem(itemElem, prod);
   }
+
+  updateCartSummary();
 });
