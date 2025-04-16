@@ -13,7 +13,11 @@ export function updateSelectOption() {
     const option = document.createElement('option');
     option.value = product.id;
     option.textContent = `${product.name} - ${product.price}원`;
-    if (product.stock === 0) option.disabled = true;
+
+    if (product.stock === 0) {
+      option.disabled = true;
+    }
+
     document.getElementById('product-select').appendChild(option);
   });
 }

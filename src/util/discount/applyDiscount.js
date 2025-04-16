@@ -22,6 +22,7 @@ export function applyDiscount(totalBefore, totalAfterItem, productCount) {
 
   if (productCount >= BULK_DISCOUNT_THRESHOLD) {
     const bulkDiscount = totalBefore * BULK_DISCOUNT_RATE;
+
     if (bulkDiscount > itemLevelDiscount) {
       finalTotal = totalBefore * (1 - BULK_DISCOUNT_RATE);
       appliedDiscountRate = BULK_DISCOUNT_RATE;

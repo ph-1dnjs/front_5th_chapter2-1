@@ -1,6 +1,12 @@
-import { PRODUCTS, CART_ITEM_QUANTITY_TEXT, CART_ITEM_ADD_ALERT } from './constant';
-import { CartItem } from './component';
-import { updateCartSummary, handleCartItemUpdate, removeCartItem } from './util/cart';
+import { PRODUCTS } from './constant';
+import {
+  updateCartSummary,
+  handleCartItemUpdate,
+  removeCartItem,
+  updateExistingCartItem,
+  addNewCartItem,
+  findProductById,
+} from './util/cart';
 
 export function setCartEventHandlers() {
   document.getElementById('add-to-cart').addEventListener('click', handleAddToCart);
@@ -39,36 +45,4 @@ function handleCartItemsClick(event) {
   }
 
   updateCartSummary();
-}
-
-// 상품 찾기
-function findProductById(productId) {
-  return PRODUCTS.find((product) => product.id === productId);
-}
-
-// 기존 장바구니 항목 업데이트
-function updateExistingCartItem(cartItemElement, product) {
-  const quantitySpan = cartItemElement.querySelector('span');
-  const currentQuantity = getItemQuantity(quantitySpan.textContent);
-  const newQuantity = currentQuantity + 1;
-
-  if (newQuantity > product.stock) {
-    alert(CART_ITEM_ADD_ALERT);
-    return;
-  }
-
-  quantitySpan.textContent = `${product.name} - ${product.price}원 ${CART_ITEM_QUANTITY_TEXT}${newQuantity}`;
-  product.stock--;
-}
-
-// 새 장바구니 항목 추가
-function addNewCartItem(product) {
-  const $cartItemElement = CartItem(product);
-  document.getElementById('cart-items').appendChild($cartItemElement);
-  product.stock--;
-}
-
-// 수량 파싱 유틸
-function getItemQuantity(text) {
-  return parseInt(text.split(CART_ITEM_QUANTITY_TEXT)[1]);
 }

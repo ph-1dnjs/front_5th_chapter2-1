@@ -4,3 +4,7 @@ export * from './parseQuantity';
 export * from './removeCartItem';
 export * from './updateCartSummary';
 export * from './updateCartTotalUI';
+export * from './updateExistingCartItem';
+export * from './getItemQuantity';
+export * from './addNewCartItem';
+export * from './findProductById';
