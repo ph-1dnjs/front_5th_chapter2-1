@@ -2,6 +2,8 @@ import js from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import babelParser from '@babel/eslint-parser';
+import reactPlugin from 'eslint-plugin-react';
 
 const globals = {
   document: 'readonly',
@@ -16,6 +18,7 @@ export default [
   {
     files: ['**/*.js', '**/*.jsx'],
     languageOptions: {
+      parser: babelParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals,
@@ -23,6 +26,7 @@ export default [
     plugins: {
       import: importPlugin,
       prettier: prettierPlugin,
+      react: reactPlugin,
     },
     rules: {
       ...importPlugin.configs.recommended.rules,
@@ -40,6 +44,7 @@ export default [
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
+      parser: babelParser,
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals,
@@ -47,6 +52,7 @@ export default [
     plugins: {
       import: importPlugin,
       prettier: prettierPlugin,
+      react: reactPlugin,
     },
     rules: {
       ...importPlugin.configs.recommended.rules,
