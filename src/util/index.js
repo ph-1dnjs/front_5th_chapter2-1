@@ -5,3 +5,7 @@ export * from './updateStockInfo';
 export * from './renderRewardPoints';
 export * from './handleCartItemUpdate';
 export * from './removeCartItem';
+export * from './calculateCartTotals';
+export * from './parseQuantity';
+export * from './applyBulkAndExtraDiscount';
+export * from './updateCartTotalUI';
