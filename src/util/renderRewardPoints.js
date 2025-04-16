@@ -11,11 +11,11 @@ import { PointTag } from '../component';
 
 export const renderRewardPoints = ($cartTotal, totalAmount) => {
   const rewardPoints = Math.floor(totalAmount / 1000);
-  let ptsTag = document.getElementById('loyalty-points');
+  let $pointTag = document.getElementById('loyalty-points');
 
-  if (!ptsTag) {
-    ptsTag = PointTag();
-    $cartTotal.appendChild(ptsTag);
+  if (!$pointTag) {
+    $pointTag = PointTag();
+    $cartTotal.appendChild($pointTag);
   }
-  ptsTag.textContent = `(포인트: ${rewardPoints})`;
+  $pointTag.textContent = `(포인트: ${rewardPoints})`;
 };

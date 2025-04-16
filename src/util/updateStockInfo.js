@@ -8,14 +8,14 @@ import { PRODUCTS, LOW_STOCK_THRESHOLD } from '../constant';
  */
 
 export function updateStockInfo() {
-  let infoMsg = '';
+  let infoMesssage = '';
   const $cartStrockInfo = document.getElementById('stock-status');
 
-  PRODUCTS.forEach(function (item) {
-    if (item.stock < LOW_STOCK_THRESHOLD) {
-      infoMsg += `${item.name}: ${item.stock > 0 ? `재고 부족 (${item.stock}개 남음)` : '품절'}\n`;
+  PRODUCTS.forEach(function (product) {
+    if (product.stock < LOW_STOCK_THRESHOLD) {
+      infoMesssage += `${product.name}: ${product.stock > 0 ? `재고 부족 (${product.stock}개 남음)` : '품절'}\n`;
     }
   });
 
-  $cartStrockInfo.textContent = infoMsg;
+  $cartStrockInfo.textContent = infoMesssage;
 }

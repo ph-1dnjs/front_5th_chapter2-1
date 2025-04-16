@@ -9,11 +9,11 @@ import { PRODUCTS } from '../constant';
 export function updateSelectOption() {
   document.getElementById('product-select').innerHTML = '';
 
-  PRODUCTS.forEach(function (item) {
+  PRODUCTS.forEach(function (product) {
     const option = document.createElement('option');
-    option.value = item.id;
-    option.textContent = `${item.name} - ${item.price}원`;
-    if (item.stock === 0) option.disabled = true;
+    option.value = product.id;
+    option.textContent = `${product.name} - ${product.price}원`;
+    if (product.stock === 0) option.disabled = true;
     document.getElementById('product-select').appendChild(option);
   });
 }

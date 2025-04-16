@@ -8,32 +8,19 @@ export function setCartEventHandlers() {
 }
 
 function handleAddToCart() {
-  const $ProductSelect = document.getElementById('product-select');
-  const selItem = $ProductSelect.value;
-  const itemToAdd = PRODUCTS.find(function (p) {
-    return p.id === selItem;
-  });
+  const $productSelect = document.getElementById('product-select');
+  const selectedProductId = $productSelect.value;
+  const product = findProductById(selectedProductId);
+  if (!product || product.stock <= 0) return;
 
-  if (itemToAdd && itemToAdd.stock > 0) {
-    const item = document.getElementById(itemToAdd.id);
-    if (item) {
-      const newQty =
-        parseInt(item.querySelector('span').textContent.split(CART_ITEM_QUANTITY_TEXT)[1]) + 1;
-      if (newQty <= itemToAdd.stock) {
-        item.querySelector('span').textContent =
-          `${itemToAdd.name} - ${itemToAdd.price}원 ${CART_ITEM_QUANTITY_TEXT}${newQty}`;
-        itemToAdd.stock--;
-      } else {
-        alert(CART_ITEM_ADD_ALERT);
-      }
-    } else {
-      const $cartItem = CartItem(itemToAdd);
-      document.getElementById('cart-items').appendChild($cartItem);
-      itemToAdd.stock--;
-    }
-
-    updateCartSummary();
+  const $existingCartItem = document.getElementById(product.id);
+  if ($existingCartItem) {
+    updateExistingCartItem($existingCartItem, product);
+  } else {
+    addNewCartItem(product);
   }
+
+  updateCartSummary();
 }
 
 function handleCartItemsClick(event) {
@@ -52,4 +39,36 @@ function handleCartItemsClick(event) {
   }
 
   updateCartSummary();
+}
+
+// 상품 찾기
+function findProductById(productId) {
+  return PRODUCTS.find((product) => product.id === productId);
+}
+
+// 기존 장바구니 항목 업데이트
+function updateExistingCartItem(cartItemElement, product) {
+  const quantitySpan = cartItemElement.querySelector('span');
+  const currentQuantity = getItemQuantity(quantitySpan.textContent);
+  const newQuantity = currentQuantity + 1;
+
+  if (newQuantity > product.stock) {
+    alert(CART_ITEM_ADD_ALERT);
+    return;
+  }
+
+  quantitySpan.textContent = `${product.name} - ${product.price}원 ${CART_ITEM_QUANTITY_TEXT}${newQuantity}`;
+  product.stock--;
+}
+
+// 새 장바구니 항목 추가
+function addNewCartItem(product) {
+  const $cartItemElement = CartItem(product);
+  document.getElementById('cart-items').appendChild($cartItemElement);
+  product.stock--;
+}
+
+// 수량 파싱 유틸
+function getItemQuantity(text) {
+  return parseInt(text.split(CART_ITEM_QUANTITY_TEXT)[1]);
 }

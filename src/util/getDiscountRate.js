@@ -8,7 +8,9 @@ import { DISCOUNT } from '../constant';
  */
 
 export function getDiscountRate(id, quantity) {
-  if (quantity < 10) return 0;
+  if (quantity < 10) {
+    return 0;
+  }
 
   return DISCOUNT[id] || 0;
 }
