@@ -1,6 +1,6 @@
 import { PRODUCTS, CART_ITEM_QUANTITY_TEXT, CART_ITEM_ADD_ALERT } from './constant';
 import { CartItem } from './component';
-import { updateCartSummary, handleCartItemUpdate, removeCartItem } from './util';
+import { updateCartSummary, handleCartItemUpdate, removeCartItem } from './util/cart';
 
 export function setCartEventHandlers() {
   document.getElementById('add-to-cart').addEventListener('click', handleAddToCart);

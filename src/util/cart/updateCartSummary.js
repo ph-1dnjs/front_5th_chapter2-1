@@ -1,10 +1,7 @@
-import {
-  calculateCartTotals,
-  applyBulkAndExtraDiscount,
-  updateStockInfo,
-  updateCartTotalUI,
-  renderRewardPoints,
-} from '../util';
+import { calculateCartTotals, updateCartTotalUI } from '../cart';
+import { applyDiscount } from '../discount';
+import { updateStockInfo } from '../product';
+import { renderRewardPoints } from '../reward';
 
 /**
  * 장바구니 요약을 업데이트하는 함수.
@@ -19,7 +16,7 @@ export function updateCartSummary() {
   const { totalBeforeDiscount, totalAfterItemDiscount, productCount } =
     calculateCartTotals(cartItems);
 
-  const { finalTotal, appliedDiscountRate } = applyBulkAndExtraDiscount(
+  const { finalTotal, appliedDiscountRate } = applyDiscount(
     totalBeforeDiscount,
     totalAfterItemDiscount,
     productCount,

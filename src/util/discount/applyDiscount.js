@@ -3,7 +3,7 @@ import {
   BULK_DISCOUNT_RATE,
   EXTRA_DISCOUNT_DAY,
   EXTRA_DISCOUNT_RATE,
-} from '../constant';
+} from '../../constant';
 
 /**
  * 총액에 대해 묶음 할인과 요일 추가 할인을 적용하여 최종 금액과 적용된 할인율을 반환합니다.
@@ -14,7 +14,7 @@ import {
  * @returns {{ finalTotal: number, appliedDiscountRate: number }} - 최종 금액과 적용된 할인율
  */
 
-export function applyBulkAndExtraDiscount(totalBefore, totalAfterItem, productCount) {
+export function applyDiscount(totalBefore, totalAfterItem, productCount) {
   let finalTotal = totalAfterItem;
   let appliedDiscountRate = 0;
 

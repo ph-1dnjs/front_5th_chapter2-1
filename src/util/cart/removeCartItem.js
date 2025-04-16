@@ -1,4 +1,4 @@
-import { CART_ITEM_QUANTITY_TEXT } from '../constant';
+import { CART_ITEM_QUANTITY_TEXT } from '../../constant';
 
 /**
  * 장바구니 아이템 삭제 처리 함수

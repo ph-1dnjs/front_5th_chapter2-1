@@ -1,4 +1,4 @@
-import { PRODUCTS } from '../constant';
+import { PRODUCTS } from '../../constant';
 
 /**
  * 선택 가능한 제품들을 드롭다운 목록에 업데이트합니다.

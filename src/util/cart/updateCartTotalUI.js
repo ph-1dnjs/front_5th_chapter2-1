@@ -1,4 +1,4 @@
-import { DiscountRate } from '../component';
+import { DiscountRate } from '../../component';
 
 /**
  * 장바구니 총액을 UI에 업데이트하는 함수.

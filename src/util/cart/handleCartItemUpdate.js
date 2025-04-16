@@ -1,4 +1,4 @@
-import { CART_ITEM_QUANTITY_TEXT, CART_ITEM_ADD_ALERT } from '../constant';
+import { CART_ITEM_QUANTITY_TEXT, CART_ITEM_ADD_ALERT } from '../../constant';
 
 /**
  * 장바구니 아이템의 수량 변경 또는 삭제 처리를 담당하는 함수

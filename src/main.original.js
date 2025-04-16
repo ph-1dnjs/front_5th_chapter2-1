@@ -6,8 +6,9 @@ import {
   SUGGEST_ITEM_INTERVAL,
 } from './constant';
 import { CartContainer, CartWrapper } from './component';
-import { updateSelectOption, updateCartSummary } from './util';
 import { setCartEventHandlers } from './eventHandler';
+import { updateCartSummary } from './util/cart';
+import { updateSelectOption } from './util/product';
 
 // TODO: item, product 의미는 다르지만 사용되는 목적은 동일하기에 관리 차원에서 통일.
 // id 값이 테스트에 영향을 미치기 때문에 한번에 테스트 코드와 같이 수정할 예정

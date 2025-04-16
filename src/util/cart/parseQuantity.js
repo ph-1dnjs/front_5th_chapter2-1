@@ -1,4 +1,4 @@
-import { CART_ITEM_QUANTITY_TEXT } from '../constant';
+import { CART_ITEM_QUANTITY_TEXT } from '../../constant';
 
 /**
  * 주어진 장바구니 아이템의 수량을 파싱하여 반환합니다.

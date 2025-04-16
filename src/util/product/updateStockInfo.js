@@ -1,4 +1,4 @@
-import { PRODUCTS, LOW_STOCK_THRESHOLD } from '../constant';
+import { PRODUCTS, LOW_STOCK_THRESHOLD } from '../../constant';
 
 /**
  * 재고 정보를 업데이트하여 화면에 표시합니다.

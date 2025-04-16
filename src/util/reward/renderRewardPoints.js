@@ -1,4 +1,4 @@
-import { PointTag } from '../component';
+import { PointTag } from '../../component';
 
 /**
  * 총 금액에 따른 포인트를 계산하여 화면에 표시합니다.

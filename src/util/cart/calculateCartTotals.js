@@ -1,5 +1,6 @@
-import { PRODUCTS } from '../constant';
-import { getDiscountRate, parseQuantity } from '../util';
+import { PRODUCTS } from '../../constant';
+import { getDiscountRate } from '../discount';
+import { parseQuantity } from '../cart';
 
 /**
  * 장바구니 아이템들의 총액, 아이템 할인 적용 후 총액, 제품 수량을 계산합니다.

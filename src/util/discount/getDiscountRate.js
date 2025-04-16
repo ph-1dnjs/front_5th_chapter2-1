@@ -1,4 +1,4 @@
-import { DISCOUNT } from '../constant';
+import { DISCOUNT } from '../../constant';
 
 /**
  * 제품 ID와 수량을 받아 할인율을 반환합니다.
