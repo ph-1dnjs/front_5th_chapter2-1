@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProductSelectOption } from './component/ProductSelectOption';
 import { ProductAddButton } from './component/ProductAddButton';
 import { ProductStockInfo } from './component/ProductStockInfo';
@@ -6,11 +6,45 @@ import { PRODUCTS } from './constant/product';
 import { CartTotal } from './component/CartTotal';
 import { IProduct, ICartProduct } from './type/product';
 import { CartProducts } from './component/CartProducts';
+import {
+  DISCOUNT_LUCKY_ITEM,
+  DISCOUNT_SUGGEST_ITEM,
+  LUCKY_ITEM_INTERVAL,
+  SUGGEST_ITEM_INTERVAL,
+} from './constant/cart';
 
 const App = () => {
   const [products, setProducts] = useState(PRODUCTS);
   const [cartProducts, setCartProducts] = useState<Record<string, ICartProduct>>({});
   const [selectedProduct, setSelectedProduct] = useState(PRODUCTS[0]);
+
+  useEffect(() => {
+    setTimeout(function () {
+      setInterval(function () {
+        const luckyItem = PRODUCTS[Math.floor(Math.random() * PRODUCTS.length)];
+        if (Math.random() < 0.3 && luckyItem.stock > 0) {
+          const discountedPrice = Math.round(luckyItem.price * DISCOUNT_LUCKY_ITEM);
+          alert(`번개세일! ${luckyItem.name}이(가) 20% 할인 중입니다!`);
+          updateSelectOption(luckyItem.id, discountedPrice);
+        }
+      }, LUCKY_ITEM_INTERVAL);
+    }, Math.random() * 10000);
+
+    setTimeout(function () {
+      setInterval(function () {
+        if (selectedProduct) {
+          const suggest = PRODUCTS.find(function (item) {
+            return item.id !== selectedProduct.id && item.stock > 0;
+          });
+          if (suggest) {
+            const discountedPrice = Math.round(suggest.price * DISCOUNT_SUGGEST_ITEM);
+            alert(`${suggest.name}은(는) 어떠세요? 지금 구매하시면 5% 추가 할인!`);
+            updateSelectOption(suggest.id, discountedPrice);
+          }
+        }
+      }, SUGGEST_ITEM_INTERVAL);
+    }, Math.random() * 20000);
+  }, []);
 
   const handleAddToCart = () => {
     const productId = selectedProduct.id;
@@ -138,6 +172,14 @@ const App = () => {
     setProducts(updateProducts);
   };
 
+  const updateSelectOption = (productId: string, newPrice: number) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId ? { ...product, price: newPrice } : product,
+      ),
+    );
+  };
+
   return (
     <div className='bg-gray-100 p-8'>
       <div className='max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8'>
@@ -148,7 +190,7 @@ const App = () => {
           onIncreaseQuantity={handleIncreaseQuantity}
           onRemoveProduct={handleRemoveFromCart}
         />
-        <CartTotal finalTotal={0} discountRate={0} />
+        <CartTotal products={Object.values(cartProducts)} />
         <ProductSelectOption products={products} onClick={handleSelectOption} />
         <ProductAddButton onClick={handleAddToCart} />
         <ProductStockInfo products={products} />
