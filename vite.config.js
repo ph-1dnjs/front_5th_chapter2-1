@@ -5,7 +5,7 @@ import path from 'path';
 const isProd = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
-  base: isProd ? '/front_5th_chapter1-3/' : '/',
+  base: isProd ? '/front_5th_chapter2-1/' : '/',
   test: {
     globals: true,
     environment: 'jsdom',
